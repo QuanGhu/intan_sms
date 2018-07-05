@@ -11,6 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'Admin\DashboardController@index')->name('dashboard');
+Route::get('/patient', 'Admin\PatientController@index')->name('patient');
+Route::get('/poli', 'Admin\PoliController@index')->name('poli');
+
