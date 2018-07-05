@@ -12,6 +12,15 @@
         "laravelcollective/html": "^5.6.0",
         "yajra/laravel-datatables-oracle": "~8.0"
     },
+    "repositories": [
+        {
+          "type": "git",
+          "url": "https://github.com/smsgatewayme/client-php.git"
+        }
+      ],
+      "require": {
+        "smsgatewayme/client": "^0.0.1"
+      },
     "require-dev": {
         "filp/whoops": "^2.0",
         "fzaninotto/faker": "^1.4",

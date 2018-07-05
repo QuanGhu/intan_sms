@@ -33,6 +33,14 @@
             </a>
         </li>
         <li class="nav-item">
+            <a href="{{ route('message') }}" class="nav-link">
+                <i class="nav-icon fa fa-user-circle"></i>
+                <p>
+                Daftar Pesan Masuk
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="{{ route('logout') }}" class="nav-link">
                 <i class="nav-icon fa fa-sign-out"></i>
                 <p>

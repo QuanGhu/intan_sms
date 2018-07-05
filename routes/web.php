@@ -27,7 +27,12 @@ Route::group(['middleware' => ['auth']], function(){
         Route::delete('/delete', 'Admin\AdminController@delete')->name('admin.delete');
         Route::put('/update', 'Admin\AdminController@update')->name('admin.update');
     });
+    Route::group(['prefix' => 'message'], function () {
+        Route::get('/', 'Admin\MessageController@index')->name('message');
+    });
 });
+
+
 // Auth::routes();
 
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
