@@ -20,4 +20,10 @@ Route::group(['prefix' => 'poli'], function () {
     Route::delete('/delete', 'Admin\PoliController@delete')->name('poli.delete');
     Route::put('/update', 'Admin\PoliController@update')->name('poli.update');
 });
-
+Route::group(['prefix' => 'super'], function () {
+    Route::get('/', 'Admin\AdminController@index')->name('admin');
+    Route::post('/save', 'Admin\AdminController@save')->name('admin.save');
+    Route::post('/list', 'Admin\AdminController@list')->name('admin.list');
+    Route::delete('/delete', 'Admin\AdminController@delete')->name('admin.delete');
+    Route::put('/update', 'Admin\AdminController@update')->name('admin.update');
+});

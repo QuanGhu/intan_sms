@@ -24,5 +24,13 @@
                 </p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('admin') }}" class="nav-link">
+                <i class="nav-icon fa fa-user-circle"></i>
+                <p>
+                Daftar Admin
+                </p>
+            </a>
+        </li>
     </ul>
 </nav>
