@@ -13,5 +13,11 @@
 
 Route::get('/', 'Admin\DashboardController@index')->name('dashboard');
 Route::get('/patient', 'Admin\PatientController@index')->name('patient');
-Route::get('/poli', 'Admin\PoliController@index')->name('poli');
+Route::group(['prefix' => 'poli'], function () {
+    Route::get('/', 'Admin\PoliController@index')->name('poli');
+    Route::post('/save', 'Admin\PoliController@save')->name('poli.save');
+    Route::post('/list', 'Admin\PoliController@list')->name('poli.list');
+    Route::delete('/delete', 'Admin\PoliController@delete')->name('poli.delete');
+    Route::put('/update', 'Admin\PoliController@update')->name('poli.update');
+});
 

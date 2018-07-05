@@ -6,9 +6,25 @@
   <title>Puskesmas</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/adminlte.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/datatables.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/jquery-confirm.min.css') }}">
 </head>
 <body class="hold-transition sidebar-mini">
+    <div class="page-loader-wrapper" style="display: none">
+        <div class="loader">
+            <div class="preloader">
+                <div class="spinner-layer pl-red">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="wrapper">
       <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
 
@@ -64,8 +80,13 @@
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('assets/js/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/js/fastclick.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery-confirm.min.js') }}"></script>
     <script src="{{ asset('assets/js/adminlte.min.js') }}"></script>
+    <script src="{{ asset('assets/js/notify.min.js') }}"></script>
     <script src="{{ asset('assets/js/demo.js') }}"></script>
+    @stack('scripts')
     </body>
 </html>
