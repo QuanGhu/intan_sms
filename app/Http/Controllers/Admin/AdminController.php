@@ -12,7 +12,8 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return view('admin');
+        $title = 'Daftar Admin';
+        return view('admin')->with('title',$title);
     }
 
     public function save(Request $request, Admin $admin)

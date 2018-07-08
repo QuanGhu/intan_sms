@@ -9,6 +9,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('dashboard');
+        $title = 'Halaman Dashboard';
+        return view('dashboard')->with('title',$title);
     }
 }

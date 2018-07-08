@@ -12,7 +12,8 @@ class PatientController extends Controller
 {
     public function index()
     {
-        return view('patient');
+        $title = 'Halaman Daftar Pasien';
+        return view('patient')->with('title', $title);
     }
 
     public function list(Patient $patient)

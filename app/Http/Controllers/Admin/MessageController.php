@@ -20,8 +20,9 @@ class MessageController extends Controller
 
     public function index()
     {
+        $title = 'Halaman Pesan Masuk';
         $messages = Message::all();
-        return view('message')->with('messages',$messages);
+        return view('message')->with('messages',$messages)->with('title',$title);
     }
 
     public function list(Message $message)

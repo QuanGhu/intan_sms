@@ -12,7 +12,8 @@ class PoliController extends Controller
 {
     public function index()
     {
-        return view('poli');
+        $title = 'Halaman Daftar Poli';
+        return view('poli')->with('title',$title);
     }
 
     public function save(Request $request, Poli $poli)
