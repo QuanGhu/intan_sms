@@ -13,10 +13,11 @@ use Carbon\Carbon;
 
 class MessageController extends Controller
 {
-    public function __construct(Patient $patient)
-    {
-        $this->patient = $patient;
-    }
+    // public function __construct(Patient $patient, Message $message)
+    // {
+    //     $this->patient = $patient;
+    //     $this->message = $message;
+    // }
 
     public function index()
     {
@@ -87,7 +88,7 @@ class MessageController extends Controller
         return $response->results;
     }
 
-    public function saveSms(Message $message)
+    public function saveSms(Message $message, Patient $patient)
     {
         $dataMessages = $this->readSms();
         foreach($dataMessages as $dataMessage)
@@ -95,7 +96,7 @@ class MessageController extends Controller
             $checkExist = Message::where('message_id', $dataMessage->id)->first();
             if($checkExist)
             {
-                return $this->processSms();
+                return $this->processSms($patient);
             }
             $store['device_id'] = $dataMessage->device_id;
             $store['phone_number'] = $dataMessage->phone_number;
@@ -106,7 +107,7 @@ class MessageController extends Controller
             $save = Crud::save($message, $store);
         }
 
-        return $this->processSms();
+        return $this->processSms($patient);
     }
 
     public function sendSms($phone_number, $status, $queue_no = null, $poli_code = null)
@@ -173,21 +174,21 @@ class MessageController extends Controller
         return $response;
     }
 
-    public function processSms()
+    public function processSms(Patient $patient)
     {
         $messages = Message::where('status', 'Belum Di Proses')->get();
         foreach($messages as $message)
         {
             $data = $message->message.'#'.$message->message_id.'#'.$message->phone_number;
             $word = preg_split('/[#,]+/', $data, 5);
-            $this->savePatient($word);
+            $this->savePatient($word, $patient);
             // array_push($arr, $word);
         }
     }
 
 
 
-    public function savePatient($data)
+    public function savePatient($data, Patient $patient)
     {
         $getPoli = Poli::where('poli_code', $data[2])->first();
         if($getPoli)
@@ -204,7 +205,7 @@ class MessageController extends Controller
             $store['register_time'] = Carbon::now();
             $store['poli_id'] = $getPoli->id;
     
-            $save = Crud::save($this->patient, $store);
+            $save = Crud::save($patient, $store);
             if($save)
             {
                 $update = Message::where('message_id', $save->queue_code)->update(['status' => 'Terdaftar']);
