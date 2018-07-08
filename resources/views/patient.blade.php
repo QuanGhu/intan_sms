@@ -9,23 +9,19 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0">
-                    <table class="table table-hover">
-                    <tr>
-                        <th>Nomor Antrian</th>
-                        <th>Kode Antrian</th>
-                        <th>Tanggal Daftar</th>
-                        <th>Nama</th>
-                        <th>Umur</th>
-                        <th>Poli Tujuan</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>A101</td>
-                        <td>25-6-2018</td>
-                        <td>Budi</td>
-                        <td>28 Tahun</td>
-                        <td>Poli Gigi</td>
-                    </tr>
+                    <table class="table table-hover" id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Tanggal Daftar</th>
+                                <th>Nomor Antrian</th>
+                                <th>Kode Antrian</th>
+                                <th>Nama</th>
+                                <th>Nomor Hp</th>
+                                <th>Poli Tujuan</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
                     </table>
                 </div>
                 <!-- /.card-body -->
@@ -35,3 +31,31 @@
     </div>
 </div><!-- /.row -->
 @endsection
+@push('scripts')
+<script type="text/javascript">
+    $(document).ready(function(){
+        var dt = $('#dataTable').DataTable({
+                orderCellsTop: true,
+                responsive: true,
+                processing: true,
+                serverSide: true,
+                searching: true,
+                autoWidth: false,
+                ajax: {
+                        url :'{{ route('patient.list') }}',
+                        data: { '_token' : '{{csrf_token() }}'},
+                        type: 'POST',
+                },
+                columns: [
+                    { data: 'DT_Row_Index', orderable: false, searchable: false, "width": "30px"},
+                    { data: 'register_time', name: 'register_time' },
+                    { data: 'queue_no', name: 'queue_no' },
+                    { data: 'queue_code', name: 'queue_code' },
+                    { data: 'name', name: 'name' },
+                    { data: 'phone_number', name: 'phone_number' },
+                    { data: 'poli', name: 'poli' }
+                ]
+            });
+    });
+</script>
+@endpush

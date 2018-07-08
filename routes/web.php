@@ -12,7 +12,6 @@
 */
 Route::group(['middleware' => ['auth']], function(){
     Route::get('/', 'Admin\DashboardController@index')->name('dashboard');
-    Route::get('/patient', 'Admin\PatientController@index')->name('patient');
     Route::group(['prefix' => 'poli'], function () {
         Route::get('/', 'Admin\PoliController@index')->name('poli');
         Route::post('/save', 'Admin\PoliController@save')->name('poli.save');
@@ -29,9 +28,17 @@ Route::group(['middleware' => ['auth']], function(){
     });
     Route::group(['prefix' => 'message'], function () {
         Route::get('/', 'Admin\MessageController@index')->name('message');
+        Route::post('/list', 'Admin\MessageController@list')->name('message.list');
+    });
+    Route::group(['prefix' => 'patient'], function () {
+        Route::get('/', 'Admin\PatientController@index')->name('patient');
+        Route::post('/list', 'Admin\PatientController@list')->name('patient.list');
     });
 });
 
+Route::get('/test', 'Admin\MessageController@getEachWord')->name('getWord');
+Route::get('/do', 'Admin\MessageController@saveSms')->name('save');
+Route::get('/send', 'Admin\MessageController@sendSms')->name('send');
 
 // Auth::routes();
 

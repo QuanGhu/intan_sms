@@ -10,4 +10,9 @@ class Poli extends Model
     protected $fillable = [
         'poli_code', 'name', 'doctor_name'
     ];
+
+    public function patient()
+    {
+        return $this->hasMany('App\Models\Patient','poli_id');
+    }
 }

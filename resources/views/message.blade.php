@@ -9,21 +9,15 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0">
-                    <table class="table table-hover">
-                        <tr>
-                            <th>Nomor HP</th>
-                            <th>Message ID</th>
+                    <table class="table table-hover" id="dataTable">
+                        <thead>
+                            <th>No</th>
+                            <th>Nomor Hp</th>
                             <th>Pesan</th>
+                            <th>Pesan ID</th>
                             <th>Status</th>
-                        </tr>
-                        @foreach($messages as $message)
-                            <tr>
-                                <td>{{$message->phone_number}}</td>
-                                <td>{{$message->id}}</td>
-                                <td>{{$message->message}}</td>
-                                <td>{{$message->status}}</td>
-                            </tr>
-                        @endforeach
+                        </thead>
+                        <tbody></tbody>
                     </table>
                 </div>
                 <!-- /.card-body -->
@@ -33,3 +27,29 @@
     </div>
 </div><!-- /.row -->
 @endsection
+@push('scripts')
+<script type="text/javascript">
+    $(document).ready(function(){
+        var dt = $('#dataTable').DataTable({
+                orderCellsTop: true,
+                responsive: true,
+                processing: true,
+                serverSide: true,
+                searching: true,
+                autoWidth: false,
+                ajax: {
+                        url :'{{ route('message.list') }}',
+                        data: { '_token' : '{{csrf_token() }}'},
+                        type: 'POST',
+                },
+                columns: [
+                    { data: 'DT_Row_Index', orderable: false, searchable: false, "width": "30px"},
+                    { data: 'phone_number', name: 'phone_number' },
+                    { data: 'message', name: 'message' },
+                    { data: 'message_id', name: 'message_id' },
+                    { data: 'status', name: 'status' }
+                ]
+            });
+    });
+</script>
+@endpush
