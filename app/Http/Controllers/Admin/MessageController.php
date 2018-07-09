@@ -51,7 +51,7 @@ class MessageController extends Controller
                     [
                         'field' => 'device_id',
                         'operator' => '=',
-                        'value' => '95451'
+                        'value' => '95828'
                     ]
                 ]
             ],
@@ -118,7 +118,7 @@ class MessageController extends Controller
             [
                 'phone_number' => $phone_number,
                 'message' => $message,
-                'device_id' => '95451'
+                'device_id' => '95828'
             ]
         ]);
         $curl = curl_init();
@@ -149,7 +149,7 @@ class MessageController extends Controller
             [
                 'phone_number' => $phone_number,
                 'message' => 'Anda Sudah Terdaftar',
-                'device_id' => '95451'
+                'device_id' => '95828'
             ]
         ]);
         $curl = curl_init();
