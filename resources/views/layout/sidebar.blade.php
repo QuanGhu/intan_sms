@@ -40,6 +40,29 @@
                 </p>
             </a>
         </li>
+        <li class="nav-item has-treeview menu-open">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-table"></i>
+              <p>
+                Laporan
+                <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: block;">
+              <li class="nav-item">
+                <a href="{{ route('report.daily') }}" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Harian</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('report.monthly') }}" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Bulanan</p>
+                </a>
+              </li>
+            </ul>
+        </li>
         <li class="nav-item">
             <a href="{{ route('logout') }}" class="nav-link">
                 <i class="nav-icon fa fa-sign-out"></i>
