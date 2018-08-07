@@ -5,15 +5,18 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Patient;
+use App\Models\Poli;
 use Yajra\Datatables\Datatables;
 use Crud;
+use Carbon\Carbon;
 
 class PatientController extends Controller
 {
-    public function index()
+    public function index(Poli $poli)
     {
+        $polies = $this->getAllPoli($poli);
         $title = 'Halaman Daftar Pasien';
-        return view('patient')->with('title', $title);
+        return view('patient')->with('title', $title)->with('polies',$polies);
     }
 
     public function list(Patient $patient)
@@ -24,5 +27,21 @@ class PatientController extends Controller
         ->editColumn('poli', function ($model) {
             return $model->poli->name;
         })->addIndexColumn()->make(true);
+    }
+
+    public function save(Request $request, Patient $patient)
+    {
+        $data = $request->all();
+        $data['queue_code'] = '869844';
+        $data['queue_no'] = '1';
+        $data['register_time'] = Carbon::now();
+        $store = Crud::save($patient, $data);
+        
+        return $store ? response()->json(['status' => 'success']) : response()->json(['status' => 'false']);
+    }
+
+    public function getAllPoli(Poli $poli)
+    {
+        return Poli::all()->pluck('name', 'id');
     }
 }

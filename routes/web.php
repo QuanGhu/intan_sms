@@ -33,6 +33,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::group(['prefix' => 'patient'], function () {
         Route::get('/', 'Admin\PatientController@index')->name('patient');
         Route::post('/list', 'Admin\PatientController@list')->name('patient.list');
+        Route::post('/save','Admin\PatientController@save')->name('patient.save');
     });
     Route::group(['prefix' => 'report'], function () {
         Route::get('/daily', 'Admin\ReportController@dailyIndex')->name('report.daily');
