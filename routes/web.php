@@ -36,7 +36,9 @@ Route::group(['middleware' => ['auth']], function(){
     });
     Route::group(['prefix' => 'report'], function () {
         Route::get('/daily', 'Admin\ReportController@dailyIndex')->name('report.daily');
+        Route::post('/daily','Admin\ReportController@getDailyReport')->name('get.report.daily');
         Route::get('/monthly', 'Admin\ReportController@monthlyIndex')->name('report.monthly');
+        Route::post('/monthly', 'Admin\ReportController@getMonthlyReport')->name('get.report.monthly');
     });
 });
 

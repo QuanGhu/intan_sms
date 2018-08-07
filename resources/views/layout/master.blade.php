@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/adminlte.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/datatables.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-datepicker.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/jquery-confirm.min.css') }}">
 </head>
 <body class="hold-transition sidebar-mini">
