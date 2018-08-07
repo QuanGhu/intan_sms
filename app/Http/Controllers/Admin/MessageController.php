@@ -198,9 +198,12 @@ class MessageController extends Controller
             {
                 return $this->sendSmsExist($data[4]);
             }
+            $getLastQueue = Crud::base($patient)->whereYear('register_time', Carbon::now()->year)
+            ->whereMonth('register_time', Carbon::now()->month)->where('poli_id', $getPoli->id)
+            ->orderBy('id', 'desc')->first();
             $store['phone_number']=$data[4];
             $store['name']=$data[1];
-            $store['queue_no']= '1';
+            $store['queue_no']= $getLastQueue ? $getLastQueue->queue_no + 1 : '1';
             $store['queue_code'] = $data[3];
             $store['register_time'] = Carbon::now();
             $store['poli_id'] = $getPoli->id;
