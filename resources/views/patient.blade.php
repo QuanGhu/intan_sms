@@ -22,6 +22,7 @@
                                 <th>Nama</th>
                                 <th>Nomor Hp</th>
                                 <th>Poli Tujuan</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -86,9 +87,33 @@
                     { data: 'queue_code', name: 'queue_code' },
                     { data: 'name', name: 'name' },
                     { data: 'phone_number', name: 'phone_number' },
-                    { data: 'poli', name: 'poli' }
+                    { data: 'poli', name: 'poli' },
+                    { data: 'action', name: 'action' },
                 ]
             });
+            $('table#dataTable tbody').on( 'click', 'td>button', function (e) {
+                    var parent = $(this).parent().get( 0 );
+                    var parent1 = $(parent).parent().get( 0 );
+                    var row = dt.row(parent1);
+                    var data = row.data();
+
+                    if($(this).hasClass('delete')) {
+                        $.confirm({
+                            title: 'Delete Data!',
+                            content: 'Are You Sure To Delete This Data ?',
+                            buttons: {
+                                confirm: function () {
+                                    deleteData(data.id, $('input[name="_token"]').val(), "{{ route('patient.delete') }}");
+                                    $('#dataTable').DataTable().ajax.reload();
+                                },
+                                cancel: function () {
+                                    // close
+                                },
+                            }
+                        });
+                    }
+                });
+            
             $('#form-add').validate({
                 rules: {
                     poli_id: {
@@ -137,6 +162,32 @@
         function notification(msg, type)
         {
             $.notify(msg, type);
+        }
+
+        function deleteData(id, token, url) {
+            $.ajax({
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-Token': token
+                },
+                url: url,
+                dataType: 'JSON',
+                cache: false,
+                data: {id: id},
+                beforeSend: function(){
+                    $('.page-loader-wrapper').show();
+                },
+                success: function(result) {
+                    $('#dataTable').DataTable().ajax.reload();
+                    $('.page-loader-wrapper').hide();
+                    if(result.status=='success'){
+                        notification('Data Successfully Deleted','success');
+                    }
+                    else  {
+                        notification('Something Went Wrong','danger');
+                    }
+                }
+            });
         }
     });
 </script>

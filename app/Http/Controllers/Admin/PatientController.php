@@ -26,6 +26,11 @@ class PatientController extends Controller
         return Datatables::of($data)
         ->editColumn('poli', function ($model) {
             return $model->poli->name;
+        })
+        ->addColumn('action', function ($model) {
+            return '
+                <button type="button" class="btn btn-danger btn-cons btn-sm btn-small delete">Delete</button>
+            ';
         })->addIndexColumn()->make(true);
     }
 
@@ -41,6 +46,14 @@ class PatientController extends Controller
         $store = Crud::save($patient, $data);
         
         return $store ? response()->json(['status' => 'success']) : response()->json(['status' => 'false']);
+    }
+
+    public function delete(Request $request, Patient $patient)
+    {
+        $data = $request->id;
+        $delete = Crud::delete($patient, 'id', $data);
+
+        return $delete ? response()->json(['status' => 'success']) : response()->json(['status' => 'false']);
     }
 
     public function getAllPoli(Poli $poli)

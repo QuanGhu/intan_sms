@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth']], function(){
         Route::get('/', 'Admin\PatientController@index')->name('patient');
         Route::post('/list', 'Admin\PatientController@list')->name('patient.list');
         Route::post('/save','Admin\PatientController@save')->name('patient.save');
+        Route::delete('/delete', 'Admin\PatientController@delete')->name('patient.delete');
     });
     Route::group(['prefix' => 'report'], function () {
         Route::get('/daily', 'Admin\ReportController@dailyIndex')->name('report.daily');
