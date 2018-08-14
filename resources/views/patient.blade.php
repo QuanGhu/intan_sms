@@ -17,6 +17,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Tanggal Daftar</th>
+                                <th>Tanggal Berobat</th>
                                 <th>Nomor Antrian</th>
                                 <th>Kode Antrian</th>
                                 <th>Nama</th>
@@ -45,6 +46,10 @@
       <div class="modal-body">
         {!! Form::open(['class' => 'validate', 'id' => 'form-add']) !!}
             <div class="form-group">
+                <label for="email">Id Pasien </label>
+                {{ Form::text('patient_id', NULL ,['class' => 'form-control']) }}
+            </div>
+            <div class="form-group">
                 <label for="email">Nama Pasien </label>
                 {{ Form::text('name', NULL ,['class' => 'form-control']) }}
             </div>
@@ -56,6 +61,10 @@
                 <label for="email">Nama Poli </label>
                 {{ Form::select('poli_id', $polies, NULL, ['class' => 'form-control','placeholder' => 'Pilih Nama Poli','style' => 'width: 100%;']) }}
             </div>
+            <div class="form-group">
+                <label for="email">Tanggal Berobat </label>
+                {{ Form::text('book_date', NULL ,['class' => 'form-control','id' => 'book_date']) }}
+            </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         {!! Form::close() !!}
       </div>
@@ -66,8 +75,10 @@
 
 @endsection
 @push('scripts')
+<script src="{{ asset('assets/js/bootstrap-datepicker.min.js') }}"></script>
 <script type="text/javascript">
     $(document).ready(function(){
+        $('#book_date').datepicker({ format: 'yyyy-mm-dd' })
         var dt = $('#dataTable').DataTable({
                 orderCellsTop: true,
                 responsive: true,
@@ -83,6 +94,7 @@
                 columns: [
                     { data: 'DT_Row_Index', orderable: false, searchable: false, "width": "30px"},
                     { data: 'register_time', name: 'register_time' },
+                    { data: 'book_date', name: 'book_date' },
                     { data: 'queue_no', name: 'queue_no' },
                     { data: 'queue_code', name: 'queue_code' },
                     { data: 'name', name: 'name' },

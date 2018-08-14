@@ -8,7 +8,8 @@ class Patient extends Model
 {
     protected $table = 'patient';
     protected $fillable = [
-        'phone_number', 'name','queue_no','queue_code','register_time','poli_id'
+        'phone_number', 'name','queue_no','queue_code','register_time','poli_id',
+        'patient_id','book_date'
     ];
 
     public function poli()
