@@ -16,6 +16,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>ID Pasien</th>
                                 <th>Tanggal Daftar</th>
                                 <th>Tanggal Berobat</th>
                                 <th>Nomor Antrian</th>
@@ -93,6 +94,7 @@
                 },
                 columns: [
                     { data: 'DT_Row_Index', orderable: false, searchable: false, "width": "30px"},
+                    { data: 'patient_id', name: 'patient_id' },
                     { data: 'register_time', name: 'register_time' },
                     { data: 'book_date', name: 'book_date' },
                     { data: 'queue_no', name: 'queue_no' },
