@@ -51,7 +51,12 @@ class MessageController extends Controller
                     [
                         'field' => 'device_id',
                         'operator' => '=',
-                        'value' => '95828'
+                        'value' => '99346'
+                    ],
+                    [
+                        'field' => 'phone_number',
+                        'operator' => '!=',
+                        'value' => 'XL-Axiata'
                     ]
                 ]
             ],
@@ -76,7 +81,7 @@ class MessageController extends Controller
         CURLOPT_CUSTOMREQUEST => "POST",
         CURLOPT_POSTFIELDS => $content,
         CURLOPT_HTTPHEADER => array(
-            "Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiIsImlhdCI6MTUzMDgwNDcwMSwiZXhwIjo0MTAyNDQ0ODAwLCJ1aWQiOjU2MzQ1LCJyb2xlcyI6WyJST0xFX1VTRVIiXX0.caxPwJZ-NKebIeo5LO6n8yEbbr2u0zto4Oc2inq_Mbk",
+            "Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiIsImlhdCI6MTUzNDU4ODIzOSwiZXhwIjo0MTAyNDQ0ODAwLCJ1aWQiOjU5MjIyLCJyb2xlcyI6WyJST0xFX1VTRVIiXX0.K4NKaFu5pID32TTw6KmdD2nArTYdRoEundg93lXqk0U",
             "Content-Type: application/json"
         ),
         ));
@@ -118,7 +123,7 @@ class MessageController extends Controller
             [
                 'phone_number' => $phone_number,
                 'message' => $message,
-                'device_id' => '95828'
+                'device_id' => '99346'
             ]
         ]);
         $curl = curl_init();
@@ -133,7 +138,7 @@ class MessageController extends Controller
         CURLOPT_CUSTOMREQUEST => "POST",
         CURLOPT_POSTFIELDS => $content,
         CURLOPT_HTTPHEADER => array(
-            "Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiIsImlhdCI6MTUzMDgwNDcwMSwiZXhwIjo0MTAyNDQ0ODAwLCJ1aWQiOjU2MzQ1LCJyb2xlcyI6WyJST0xFX1VTRVIiXX0.caxPwJZ-NKebIeo5LO6n8yEbbr2u0zto4Oc2inq_Mbk",
+            "Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiIsImlhdCI6MTUzNDU4ODIzOSwiZXhwIjo0MTAyNDQ0ODAwLCJ1aWQiOjU5MjIyLCJyb2xlcyI6WyJST0xFX1VTRVIiXX0.K4NKaFu5pID32TTw6KmdD2nArTYdRoEundg93lXqk0U",
             "Content-Type: application/json"
         ),
         ));
@@ -149,7 +154,7 @@ class MessageController extends Controller
             [
                 'phone_number' => $phone_number,
                 'message' => 'Anda Sudah Terdaftar',
-                'device_id' => '95828'
+                'device_id' => '99346'
             ]
         ]);
         $curl = curl_init();
@@ -164,7 +169,7 @@ class MessageController extends Controller
         CURLOPT_CUSTOMREQUEST => "POST",
         CURLOPT_POSTFIELDS => $content,
         CURLOPT_HTTPHEADER => array(
-            "Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiIsImlhdCI6MTUzMDgwNDcwMSwiZXhwIjo0MTAyNDQ0ODAwLCJ1aWQiOjU2MzQ1LCJyb2xlcyI6WyJST0xFX1VTRVIiXX0.caxPwJZ-NKebIeo5LO6n8yEbbr2u0zto4Oc2inq_Mbk",
+            "Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiIsImlhdCI6MTUzNDU4ODIzOSwiZXhwIjo0MTAyNDQ0ODAwLCJ1aWQiOjU5MjIyLCJyb2xlcyI6WyJST0xFX1VTRVIiXX0.K4NKaFu5pID32TTw6KmdD2nArTYdRoEundg93lXqk0U",
             "Content-Type: application/json"
         ),
         ));
@@ -177,50 +182,55 @@ class MessageController extends Controller
     public function processSms(Patient $patient)
     {
         $messages = Message::where('status', 'Belum Di Proses')->get();
+        $arr = [];
         foreach($messages as $message)
         {
             $data = $message->message.'#'.$message->message_id.'#'.$message->phone_number;
-            $word = preg_split('/[#,]+/', $data, 5);
+            $word = preg_split('/[#,]+/', $data, 7);
+
             $this->savePatient($word, $patient);
             // array_push($arr, $word);
         }
+        // dd($arr[2]);
     }
 
 
 
     public function savePatient($data, Patient $patient)
     {
-        $getPoli = Poli::where('poli_code', $data[2])->first();
+        $getPoli = Poli::where('poli_code', $data[4])->first();
         if($getPoli)
         {
-            $checkData = Patient::where('queue_code', $data[3])->first();
+            $checkData = Patient::where('queue_code', $data[5])->first();
             if($checkData)
             {
-                return $this->sendSmsExist($data[4]);
+                return $this->sendSmsExist($data[6]);
             }
             $getLastQueue = Crud::base($patient)->whereYear('register_time', Carbon::now()->year)
             ->whereMonth('register_time', Carbon::now()->month)->where('poli_id', $getPoli->id)
             ->orderBy('id', 'desc')->first();
-            $store['phone_number']=$data[4];
-            $store['name']=$data[1];
-            $store['queue_no']= $getLastQueue ? $getLastQueue->queue_no + 1 : '1';
-            $store['queue_code'] = $data[3];
+            $queueNo =  $getLastQueue ? $getLastQueue->queue_no + 1 : '1';
+            $store['phone_number']=$data[6];
+            $store['name']=$data[2];
+            $store['queue_no']= $queueNo;
+            $store['queue_code'] = $data[5];
+            $store['patient_id'] = $data[1];
             $store['register_time'] = Carbon::now();
             $store['poli_id'] = $getPoli->id;
-    
+            $store['book_date'] = $data[3];
             $save = Crud::save($patient, $store);
             if($save)
             {
-                $update = Message::where('message_id', $save->queue_code)->update(['status' => 'Terdaftar']);
-                return $this->sendSms($data[4], True, $save->queue_no, $data[2]);
+                $update = Message::where('message_id', $queueNo)->update(['status' => 'Terdaftar']);
+                return $this->sendSms($data[6], True, $queueNo, $data[5]);
             } else {
-                $update = Message::where('message_id', $data[3])->update(['status' => 'Format Salah']);
-                return $this->sendSms($data[4], false);
+                $update = Message::where('message_id', $data[5])->update(['status' => 'Format Salah']);
+                return $this->sendSms($data[6], false);
             }
 
         } else {
-            $update = Message::where('message_id', $data[3])->update(['status' => 'Format Salah']);
-            return $this->sendSms($data[4], false);
+            $update = Message::where('message_id', $data[5])->update(['status' => 'Format Salah']);
+            return $this->sendSms($data[6], false);
         }
     }
 }
