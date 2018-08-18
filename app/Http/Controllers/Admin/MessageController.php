@@ -221,7 +221,7 @@ class MessageController extends Controller
             $save = Crud::save($patient, $store);
             if($save)
             {
-                $update = Message::where('message_id', $queueNo)->update(['status' => 'Terdaftar']);
+                $update = Message::where('message_id', $data[5])->update(['status' => 'Terdaftar']);
                 return $this->sendSms($data[6], True, $queueNo, $data[5]);
             } else {
                 $update = Message::where('message_id', $data[5])->update(['status' => 'Format Salah']);
